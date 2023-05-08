@@ -56,7 +56,7 @@ class _TouristState extends State<Tourist> {
             );
           }
 
-          return HomeScreen();
+          return HomeScreen(id:id,email: emaill);
           // return Container(
           //   decoration: BoxDecoration(
           //     borderRadius: BorderRadius.circular(12),

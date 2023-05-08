@@ -1,23 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:nelumhicker/Chat/features/presentation/pages/home_page.dart';
 import '../Widgetsclasses/Bottomnavigationbar.dart';
 import '../Widgetsclasses/PageScrollView.dart';
 import '../loginnew.dart';
 
 
 class HomeScreen extends StatefulWidget {
+  final String id;
+  final String email;
   const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+    required this.id,
+    required this.email,
+  });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState(id:id,email:email);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var id;
+  var email;
+
+
+  _HomeScreenState({required this.id,required this.email});
+  final  TextEditingController emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey();
+  var auth = FirebaseAuth.instance;
+  bool isLoading = false;
+
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  ModalProgressHUD(
+        inAsyncCall: isLoading,
+      child :Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(47, 110, 182, 10),
         toolbarOpacity: 0,
@@ -157,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.bold
                         )),
-                        Text("yourname@gmail.com",
+                        Text(email,
                             style: TextStyle(
                                 fontSize: 12
                             )),
@@ -234,9 +261,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     SizedBox(width: 10,),
-                    Icon(Icons.card_giftcard_outlined,color: Colors.black),
+                    Icon(Icons.chat,color: Colors.black),
                     SizedBox(width: 10),
-                    Text("Reward",
+                    Text("Chat",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.black
@@ -245,6 +272,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Chatpage(email: emailController.text),));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => Chatpage(),));
                 // Update the state of the app.
                 // ...
               },
@@ -386,6 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    )
     );
   }
   Future<void> logout(BuildContext context) async {

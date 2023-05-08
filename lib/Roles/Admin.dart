@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nelumhicker/Chat/features/presentation/pages/home_page.dart';
 
 import '../ControllerScreens/ResetpasswordScreen.dart';
+import '../Error.dart';
 import '../New/StudentList.dart';
 import '../New/model.dart';
 import '../New/posts.dart';
@@ -129,7 +131,7 @@ class _ControllerState extends State<Controller> {
                           color: Colors.black,
                           fontSize: 16
                       )),
-                  Text("yourname@gmail.com",
+                  Text(emaill,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black45,
@@ -166,7 +168,7 @@ class _ControllerState extends State<Controller> {
                 SizedBox(height: 30,),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Errorpage()));
                   },
                   child: Row(
                     children: [
@@ -189,7 +191,7 @@ class _ControllerState extends State<Controller> {
                 SizedBox(height: 30,),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => Chatpage(),));
                   },
                   child: Row(
                     children: [
@@ -213,7 +215,7 @@ class _ControllerState extends State<Controller> {
 
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Errorpage()));
                   },
                   child: Container(
                     child: Row(

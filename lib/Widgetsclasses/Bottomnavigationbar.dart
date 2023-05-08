@@ -66,7 +66,7 @@ class _BottomNavigationClassState extends State<BottomNavigationClass> {
     setState(() {
       switch (index) {
         case 0:
-          _child = HomeScreen();
+          _child = Testclass();
           break;
         case 1:
           _child = Testclass();

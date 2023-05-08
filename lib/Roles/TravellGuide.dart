@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../Chat/features/presentation/pages/home_page.dart';
+import '../ControllerScreens/ResetpasswordScreen.dart';
+import '../Error.dart';
 import '../New/model.dart';
 import '../loginnew.dart';
 
@@ -43,76 +46,222 @@ class _TouristGuideState extends State<TouristGuide> {
   FirebaseFirestore.instance.collection('posts').snapshots();
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Travell_Guide",
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              logout(context);
-            },
-            icon: Icon(Icons.logout),
+      backgroundColor: Color.fromRGBO(47, 110, 182, 10),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 50,
           ),
-        ],
-      ),
-      body: StreamBuilder(
-        stream: _usersStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text("something is wrong");
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+          Center(
+            child: Text(
+              "Profile",
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 25,
+                  color: Colors.white),
             ),
-            child: ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (_, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: Column(
+          ),
+
+          SizedBox(
+            height: 90,
+          ),
+          //making profile pic frame
+          //the curve design container
+          // Stack(
+          //   children: [
+          //     Container(
+          //       height:100,
+          //       color: Colors.white,
+          //     ),
+          //     Center(
+          //       child: CircleAvatar(
+          //         radius: 62,
+          //         backgroundImage: AssetImage("images/avatar.png"),
+          //       ),
+          //     ),
+          //
+          //   ],
+          // ),
+          Stack(children: [
+            Container(
+              margin: EdgeInsets.only(top: 48),
+              height: 607.45,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60)),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                child: CircleAvatar(
+                  radius: 60.0,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 12.0,
+                        child:
+                        Icon(
+                          Icons.camera_alt,
+                          size: 15.0,
+                          color: Color(0xFF404040),
+                        ),
+                      ),
+                    ),
+                    radius: 60.0,
+                    backgroundImage: AssetImage('images/avatar.png'),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height:120),
+                  Text("Your name",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 16
+                      )),
+                  Text(emaill,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black45,
+                          fontSize: 16
+                      )),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                SizedBox(height: 200,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ControllerResetPassword(id: id,)));
+                  },
+                  child: Row(
                     children: [
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 3,
-                          right: 3,
-                        ),
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          title: Text(
-                            snapshot.data!.docChanges[index].doc['title'],
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                        ),
-                      ),
+                      SizedBox(width: 24,),
+                      Image(
+                        image: AssetImage("images/resetpassword.png"),
+                        color:Colors.black54 ,
+                        height: 24,
+                        width: 24,),
+                      SizedBox(width: 20,),
+                      Text("Reset Password",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87
+                        ),)
                     ],
                   ),
-                );
-              },
+                ),
+                SizedBox(height: 30,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Errorpage()));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: 24,),
+                      Image(
+                        image: AssetImage("images/location.png"),
+                        color:Colors.black54 ,
+                        height: 24,
+                        width: 24,),
+                      SizedBox(width: 20,),
+                      Text("Location Panel",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                        ),)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => Chatpage(),));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: 24,),
+                      Image(
+                        image: AssetImage("images/chat.png"),
+                        color:Colors.black54 ,
+                        height: 24,
+                        width: 24,),
+                      SizedBox(width: 20,),
+                      Text("Chat",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                        ),)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30,),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Errorpage()));
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        SizedBox(width: 24,),
+                        Image(
+                          image: AssetImage("images/tree.png"),
+                          color:Colors.black54 ,
+                          height: 24,
+                          width: 24,),
+                        SizedBox(width: 20,),
+                        Text("Add Trip",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
+                          ),)
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30,),
+                GestureDetector(
+                  onTap: () {
+                    logout(context);
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: 24,),
+                      Icon(
+                          Icons.logout,
+                          color:Colors.black54 ,
+                          size: 25),
+                      SizedBox(width: 20,),
+                      Text("Logout",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                        ),)
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
-        },
+          ])
+        ],
       ),
     );
   }
